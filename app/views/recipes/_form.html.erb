@@ -1,0 +1,26 @@
+<% form_for @recipe do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :rows => 4, :cols => 50 %>
+  </p>
+  <h3>Ingredients</h3>
+  <% f.fields_for :ingredients do |ing| %>
+    <p>
+      <%= ing.label :name %>
+      <%= ing.text_field :name, :size => 50 %>
+      <%= ing.label :quantity %>
+      <%= ing.text_field :quantity, :size => 50 %>
+      <%= ing.check_box :_destroy %>
+      <%= ing.label :_destroy, 'delete' %>
+    </p>
+  <% end -%>
+  <p>
+    <%= f.submit 'Add ingredient', :name => "add_ingredient" %>
+    <%= f.submit 'Delete checked ingredients', :name => "remove_ingredient" %>
+    <%= f.submit %>
+  </p>
+<% end %>
