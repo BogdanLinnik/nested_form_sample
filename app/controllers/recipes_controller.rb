@@ -37,10 +37,10 @@
     @recipe = Recipe.find(params[:id])
     if params[:add_ingredient]
     	# rebuild the ingredient attributes that doesn't have an id
-    	unless params[:recipe][:ingredients_attributes].blank?
-	  for attribute in params[:recipe][:ingredients_attributes]
-	    @recipe.ingredients.build(attribute.last.except(:_destroy)) unless attribute.last.has_key?(:id)
-	  end
+    	unless recipe_params[:ingredients_attributes].blank?
+	  for attribute in recipe_params[:ingredients_attributes]
+	    @recipe.ingredients.build(attribute) unless params[:recipe][:ingredients_attributes][attribute].has_key?(:id)
+    end
     	end
       # add one more empty ingredient attribute
       @recipe.ingredients.build
@@ -56,7 +56,7 @@
       end
     else
       # save goes like usual
-      if @recipe.update_attributes(params[:recipe])
+      if @recipe.update_attributes(recipe_params)
         flash[:notice] = "Successfully updated recipe."
         redirect_to @recipe and return
       end
@@ -74,6 +74,6 @@
   private
 
   def recipe_params
-   params.require(:recipe).permit(:name, :description, ingredients_attributes: [:id, :name, :quantity]) 
+   params.require(:recipe).permit(:name, :description, :add_ingredient, :remove_ingredient, :_destroy, ingredients_attributes: [:id, :name, :quantity])
   end
 end

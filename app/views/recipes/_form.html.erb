@@ -8,7 +8,7 @@
     <%= f.text_area :description, :rows => 4, :cols => 50 %>
   </p>
  <h3>Ingredients</h3>
- <% f.fields_for :ingredients do |ing| %>
+ <%= f.fields_for :ingredients do |ing| %>
    <p>
      <%= ing.label :name %>
      <%= ing.text_field :name, :size => 50 %>
@@ -19,7 +19,7 @@
    </p>
  <% end -%>
  <p>
-   <%= f.submit 'Add ingredient', :name => "add_ingredient" %>
+    <%= f.submit 'Add ingredient', :name => "add_ingredient" %>
     <%= f.submit 'Delete checked ingredients', :name => "remove_ingredient" %>
     <%= f.submit %>
   </p>
