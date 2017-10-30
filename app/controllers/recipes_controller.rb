@@ -13,7 +13,7 @@
   end
 
   def create
-    @recipe = Recipe.new(params[:recipe])
+    @recipe = Recipe.new(recipe_params)
     if params[:add_ingredient]
       # add empty ingredient associated with @recipe
       @recipe.ingredients.build
@@ -69,5 +69,11 @@
     @recipe.destroy
     flash[:notice] = "Successfully destroyed recipe."
     redirect_to recipes_url
+  end
+
+  private
+
+  def recipe_params
+   params.require(:recipe).permit(:name, :description, ingredients_attributes: [:id, :name, :quantity]) 
   end
 end
